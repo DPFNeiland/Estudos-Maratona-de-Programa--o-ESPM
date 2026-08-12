@@ -1,4 +1,23 @@
 
+def solve1(n, b):
+        
+    b.sort(reverse=True)
+
+    S = b[0]
+
+    for i in range(1, n + 2):
+        listaResposta.append(S - b[i])
+
+    M = b.index(listaResposta[-1])
+
+
+    M = listaResposta.pop(M - 1)
+
+
+    print(f"{S} {listaResposta[-1]}")
+    for resp in listaResposta:
+        print(resp, end=" ")
+    print()
 
 listaResposta = []
 
@@ -6,20 +25,27 @@ n = int(input())
 
 b = list(map(int, input().split()))
 
-b.sort(reverse=True)
+# pego o S
+maior = -1
+for i in range(n + 2):
+    if maior < b[i]:
+        maior = b[i]
+b.remove(maior)
 
-S = b[0]
+# faço as subtrações e somo tudo
+conjugado = b.copy()
+soma = 0
+for i in range(n + 1):
+    conjugado[i] = maior - b[i]
+    soma += conjugado[i]
+respM = soma - maior
 
-for i in range(1, n + 2):
-    listaResposta.append(S - b[i])
+M = b[conjugado.index(respM)]
 
-M = b.index(listaResposta[-1])
+conjugado.remove(respM)
 
+conjugado.sort(reverse=False)
 
-M = listaResposta.pop(M - 1)
-
-
-print(f"{S} {listaResposta[-1]}")
-for resp in listaResposta:
-    print(resp, end=" ")
-print()
+# resposta final
+print(f"{maior} {M}")
+print(" ".join(map(str, conjugado)))
